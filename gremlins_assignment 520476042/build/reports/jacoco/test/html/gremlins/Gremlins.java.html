@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Gremlins.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gremlins_assignment 520476042</a> &gt; <a href="index.source.html" class="el_package">gremlins</a> &gt; <span class="el_source">Gremlins.java</span></div><h1>Gremlins.java</h1><pre class="source lang-java linenums">package gremlins;
+
+//import packages
+import processing.core.PApplet;
+import processing.core.PImage;
+import java.lang.Math.*;
+import java.util.ArrayList;
+
+public class Gremlins {
+
+    // initialise variables
+    private PImage sprite;
+    public int x;
+    public int y;
+<span class="fc" id="L15">    private int speedX = 1;</span>
+<span class="fc" id="L16">    private int speedY = 1;</span>
+    private Boolean[][] wallList;
+    private Boolean[][] wallListTwo;
+<span class="fc" id="L19">    public boolean moveable = true;</span>
+<span class="fc" id="L20">    public boolean noRepeat = false;</span>
+    public boolean nothingThereUp;
+    public boolean nothingThereDown;
+    public boolean nothingThereRight;
+    public boolean nothingThereLeft;
+    public boolean nothingThere;
+<span class="fc" id="L26">    public boolean changeLevelGremlin = false;</span>
+<span class="fc" id="L27">    public boolean gremlinUp = false;</span>
+<span class="fc" id="L28">    public boolean gremlinDown = false;</span>
+<span class="fc" id="L29">    public boolean gremlinLeft = false;</span>
+<span class="fc" id="L30">    public boolean gremlinRight = false;</span>
+
+    // constructor for gremlins
+<span class="fc" id="L33">    public Gremlins(PImage sprite, int x, int y, Boolean[][] wallList, Boolean[][] wallListTwo) {</span>
+<span class="fc" id="L34">        this.sprite = sprite;</span>
+<span class="fc" id="L35">        this.x = x;</span>
+<span class="fc" id="L36">        this.y = y;</span>
+<span class="fc" id="L37">        this.wallList = wallList;</span>
+<span class="fc" id="L38">        this.wallListTwo = wallListTwo;</span>
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * Handling logic
+     */
+    public void tick() {
+<span class="fc" id="L45">        int num = (int) Math.floor(Math.random() * 5);</span>
+<span class="fc" id="L46">        checkCollision(num, wallList);</span>
+<span class="fc" id="L47">        movingability(num);</span>
+
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Handling graphics
+     */
+    public void draw(PApplet app) {
+<span class="fc" id="L55">        app.image(this.sprite, this.y, this.x);</span>
+
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Changes x and y value of gremlin to make movement
+     */
+    public void move(int dx, int dy) {
+<span class="fc" id="L63">        this.x += dx * speedX;</span>
+<span class="fc" id="L64">        this.y += dy * speedY;</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * Move the gremlins after check of obstacles
+     */
+    public void movingability(int rnum) {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (changeLevelGremlin == true) {</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">            if (rnum == 1 &amp;&amp; nothingThereUp == true) {</span>
+                // while (nothingThereUp == true) {
+<span class="nc" id="L74">                gremlinUp = true;</span>
+<span class="nc" id="L75">                gremlinDown = false;</span>
+<span class="nc" id="L76">                gremlinLeft = false;</span>
+<span class="nc" id="L77">                gremlinRight = false;</span>
+<span class="nc" id="L78">                move(1, 0);</span>
+<span class="nc" id="L79">                checkCollision(1, wallListTwo);</span>
+                // }
+<span class="nc bnc" id="L81" title="All 4 branches missed.">            } else if (rnum == 2 &amp;&amp; nothingThereDown == true) {</span>
+                // while (nothingThereDown == true) {
+<span class="nc" id="L83">                gremlinUp = false;</span>
+<span class="nc" id="L84">                gremlinDown = true;</span>
+<span class="nc" id="L85">                gremlinLeft = false;</span>
+<span class="nc" id="L86">                gremlinRight = false;</span>
+<span class="nc" id="L87">                move(-1, 0);</span>
+<span class="nc" id="L88">                checkCollision(2, wallListTwo);</span>
+                // }
+<span class="nc bnc" id="L90" title="All 4 branches missed.">            } else if (rnum == 3 &amp;&amp; nothingThereLeft == true) {</span>
+                // while (nothingThereLeft == true) {
+<span class="nc" id="L92">                gremlinUp = false;</span>
+<span class="nc" id="L93">                gremlinDown = false;</span>
+<span class="nc" id="L94">                gremlinLeft = true;</span>
+<span class="nc" id="L95">                gremlinRight = false;</span>
+<span class="nc" id="L96">                move(0, -1);</span>
+<span class="nc" id="L97">                checkCollision(3, wallListTwo);</span>
+                // }
+<span class="nc bnc" id="L99" title="All 4 branches missed.">            } else if (rnum == 4 &amp;&amp; nothingThereRight == true) {</span>
+                // while (nothingThereRight == true) {
+<span class="nc" id="L101">                gremlinUp = false;</span>
+<span class="nc" id="L102">                gremlinDown = false;</span>
+<span class="nc" id="L103">                gremlinLeft = false;</span>
+<span class="nc" id="L104">                gremlinRight = true;</span>
+<span class="nc" id="L105">                move(0, 1);</span>
+<span class="nc" id="L106">                checkCollision(4, wallListTwo);</span>
+                // }
+            }
+
+        } else {
+<span class="fc bfc" id="L111" title="All 4 branches covered.">            if (rnum == 1 &amp;&amp; nothingThereUp == true) {</span>
+                // while (nothingThereUp == true) {
+<span class="fc" id="L113">                gremlinUp = true;</span>
+<span class="fc" id="L114">                gremlinDown = false;</span>
+<span class="fc" id="L115">                gremlinLeft = false;</span>
+<span class="fc" id="L116">                gremlinRight = false;</span>
+<span class="fc" id="L117">                move(1, 0);</span>
+<span class="fc" id="L118">                checkCollision(1, wallList);</span>
+                // }
+<span class="fc bfc" id="L120" title="All 4 branches covered.">            } else if (rnum == 2 &amp;&amp; nothingThereDown == true) {</span>
+                // while (nothingThereDown == true) {
+<span class="fc" id="L122">                gremlinUp = false;</span>
+<span class="fc" id="L123">                gremlinDown = true;</span>
+<span class="fc" id="L124">                gremlinLeft = false;</span>
+<span class="fc" id="L125">                gremlinRight = false;</span>
+<span class="fc" id="L126">                move(-1, 0);</span>
+<span class="fc" id="L127">                checkCollision(2, wallList);</span>
+                // }
+<span class="fc bfc" id="L129" title="All 4 branches covered.">            } else if (rnum == 3 &amp;&amp; nothingThereLeft == true) {</span>
+                // while (nothingThereLeft == true) {
+<span class="fc" id="L131">                gremlinUp = false;</span>
+<span class="fc" id="L132">                gremlinDown = false;</span>
+<span class="fc" id="L133">                gremlinLeft = true;</span>
+<span class="fc" id="L134">                gremlinRight = false;</span>
+<span class="fc" id="L135">                move(0, -1);</span>
+<span class="fc" id="L136">                checkCollision(3, wallList);</span>
+                // }
+<span class="fc bfc" id="L138" title="All 4 branches covered.">            } else if (rnum == 4 &amp;&amp; nothingThereRight == true) {</span>
+                // while (nothingThereRight == true) {
+<span class="fc" id="L140">                gremlinUp = false;</span>
+<span class="fc" id="L141">                gremlinDown = false;</span>
+<span class="fc" id="L142">                gremlinLeft = false;</span>
+<span class="fc" id="L143">                gremlinRight = true;</span>
+<span class="fc" id="L144">                move(0, 1);</span>
+<span class="fc" id="L145">                checkCollision(4, wallList);</span>
+                // }
+            }
+        }
+
+<span class="fc" id="L150">    }</span>
+
+    /**
+     * Based on random number generated, move gremlin in a random direction
+     * Checks if the blocks around are walls and then can only move if empty
+     */
+    public void checkCollision(int rnum, Boolean[][] wallList) {
+<span class="fc bfc" id="L157" title="All 4 branches covered.">        if (rnum == 1 &amp;&amp; this.x % 20 == 0) {</span>
+<span class="fc" id="L158">            int locationX = (this.x + 20) / 20;</span>
+<span class="fc" id="L159">            int locationY = this.y / 20;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            if (wallList[locationX][locationY] == null) {</span>
+<span class="fc" id="L161">                nothingThereUp = true;</span>
+<span class="fc" id="L162">                nothingThere = true;</span>
+            } else {
+<span class="fc" id="L164">                nothingThereUp = false;</span>
+<span class="fc" id="L165">                nothingThere = false;</span>
+            }
+<span class="fc bfc" id="L167" title="All 4 branches covered.">        } else if (rnum == 2 &amp;&amp; this.x % 20 == 0) {</span>
+<span class="fc" id="L168">            int locationX = (this.x - 20) / 20;</span>
+<span class="fc" id="L169">            int locationY = this.y / 20;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            if (wallList[locationX][locationY] == null) {</span>
+<span class="fc" id="L171">                nothingThereDown = true;</span>
+<span class="fc" id="L172">                nothingThere = true;</span>
+            } else {
+<span class="fc" id="L174">                nothingThereDown = false;</span>
+<span class="fc" id="L175">                nothingThere = false;</span>
+            }
+<span class="fc bfc" id="L177" title="All 4 branches covered.">        } else if (rnum == 3 &amp;&amp; this.y % 20 == 0) {</span>
+<span class="fc" id="L178">            int locationX = this.x / 20;</span>
+<span class="fc" id="L179">            int locationY = (this.y - 20) / 20;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            if (wallList[locationX][locationY] == null) {</span>
+<span class="fc" id="L181">                nothingThereLeft = true;</span>
+<span class="fc" id="L182">                nothingThere = true;</span>
+            } else {
+<span class="fc" id="L184">                nothingThereLeft = false;</span>
+<span class="fc" id="L185">                nothingThere = false;</span>
+            }
+<span class="fc bfc" id="L187" title="All 4 branches covered.">        } else if (rnum == 4 &amp;&amp; this.y % 20 == 0) {</span>
+<span class="fc" id="L188">            int locationX = this.x / 20;</span>
+<span class="fc" id="L189">            int locationY = (this.y + 20) / 20;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            if (wallList[locationX][locationY] == null) {</span>
+<span class="fc" id="L191">                nothingThereRight = true;</span>
+<span class="fc" id="L192">                nothingThere = true;</span>
+            } else {
+<span class="fc" id="L194">                nothingThereRight = false;</span>
+<span class="fc" id="L195">                nothingThere = false;</span>
+            }
+        }
+
+<span class="fc" id="L199">    }</span>
+
+    /**
+     * Getter for x coordinate
+     */
+    public int getx() {
+<span class="fc" id="L205">        return this.x;</span>
+    }
+
+    /**
+     * Getter for y coordinate
+     */
+    public int gety() {
+<span class="fc" id="L212">        return this.y;</span>
+    }
+
+    /**
+     * Getter for width of sprite
+     */
+    public int getWidth() {
+<span class="fc" id="L219">        return this.sprite.width;</span>
+    }
+
+    /**
+     * Getter for height of sprite
+     */
+    public int getHeight() {
+<span class="fc" id="L226">        return this.sprite.height;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
